@@ -6,8 +6,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import rca.ecom.angedivine.dto.SignupRequest;
 import rca.ecom.angedivine.dto.UserDto;
+import rca.ecom.angedivine.entities.Order;
 import rca.ecom.angedivine.entities.User;
+import rca.ecom.angedivine.enums.OrderStatus;
 import rca.ecom.angedivine.enums.UserRole;
+import rca.ecom.angedivine.repository.OrderRepository;
 import rca.ecom.angedivine.repository.UserRepository;
 
 @Service
@@ -17,6 +20,9 @@ public class AuthServiceImpl implements AuthService {
         private UserRepository userRepository;
 
         private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+        @Autowired
+        private OrderRepository orderRepository;
 
         public UserDto createUser(SignupRequest signupRequest){
 
@@ -28,6 +34,14 @@ public class AuthServiceImpl implements AuthService {
                 user.setRole(UserRole.CUSTOMER);
 
                 User createdUser = userRepository.save(user);
+
+                Order order = new Order();
+                order.setAmount(0L);
+                order.setTotalAmount(0L);
+                order.setDiscount(0L);
+                order.setUser(createdUser);
+                order.setOrderStatus(OrderStatus.Pending);
+                orderRepository.save(order);
 
                 UserDto userDto = new UserDto();
                 userDto.setId(createdUser.getId());

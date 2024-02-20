@@ -6,6 +6,8 @@ import rca.ecom.angedivine.dto.CategoryDto;
 import rca.ecom.angedivine.entities.Category;
 import rca.ecom.angedivine.repository.CategoryRepository;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService{
@@ -14,10 +16,14 @@ public class CategoryServiceImpl implements CategoryService{
 
         public Category createCategory(CategoryDto categoryDto){
                 Category category = new Category();
-                category.setName(category.getName());
-                category.setDescription(category.getDescription());
+                category.setName(categoryDto.getName());
+                category.setDescription(categoryDto.getDescription());
 
                 return categoryRepository.save(category);
+        }
+
+        public List<Category> getAllCategories() {
+                return categoryRepository.findAll();
         }
 
 }

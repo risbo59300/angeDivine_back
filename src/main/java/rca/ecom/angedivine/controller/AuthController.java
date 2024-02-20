@@ -33,14 +33,14 @@ public class AuthController {
         private final UserDetailsService userDetailsService;
         private final UserRepository userRepository;
         private final JwtUtil jwtUtil;
-        private static final String TOKEN_PREFIX = "Bearer";
+        private static final String TOKEN_PREFIX = "Bearer ";
         private static final String HEADER_STRING = "Authorization";
 
         private final AuthService authService;
 
 
         @PostMapping("/authenticate")
-        public void createAuthenticationT7oken(@RequestBody AuthenticationRequest authenticationRequest,
+        public void createAuthenticationToken(@RequestBody AuthenticationRequest authenticationRequest,
                                                HttpServletResponse response) throws JSONException, IOException {
 
                 try {
